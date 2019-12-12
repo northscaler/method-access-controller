@@ -1,6 +1,6 @@
 {
   "name": "@northscaler/method-access-controller",
-  "version": "1.0.0",
+  "version": "1.0.1-rc.0",
   "description": "Access controller that determines whether given roles are allowed to invoke given methods on given classes.",
   "repository": {
     "type": "git",
