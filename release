@@ -170,8 +170,8 @@ else
 fi
 
 BRANCH="$(git status | head -n 1 | awk '{ print $3 }')"
-if ! $MATCH "^(master|$BRANCH_PREFIX[0-9]{1,}\.[0-9]{1,}$BRANCH_SUFFIX)$" "$BRANCH"; then # it is not a master or a release branch
-  echo "ERROR: you can only release from the master branch or release branches! You are currently on $BRANCH" >&2
+if ! $MATCH "^($MASTER|$BRANCH_PREFIX[0-9]{1,}\.[0-9]{1,}$BRANCH_SUFFIX)$" "$BRANCH"; then # it is not a master or a release branch
+  echo "ERROR: you can only release from the $MASTER branch or release branches! You are currently on $BRANCH" >&2
   exit 3
 else
   echo "INFO: on branch $BRANCH, from which releases are allowed"
@@ -196,7 +196,7 @@ if [ "$BRANCH" = "$MASTER" ]; then
   esac
 else # this is a release branch
   case "$RELEASE_LEVEL" in
-      rc|patch|minor|major)
+      rc|$RC|patch|minor|major)
         # ok
         ;;
       *)
@@ -211,7 +211,7 @@ echo "INFO: ok to proceed with $RELEASE_LEVEL from branch $BRANCH"
 VERSION="$V_LAST"
 
 if ! $MATCH "\-($PRE|$RC)\.[0-9]{1,}$" "$VERSION"; then
-  echo "ERROR: repository is in an inconsistent state: version does not end in a prerelease suffix! You are currently on branch $BRANCH" >&2
+  echo "ERROR: repository is in an inconsistent state: version does not end in a prerelease suffix ($PRE or $RC)! You are currently on branch $BRANCH" >&2
   exit 3
 fi
 

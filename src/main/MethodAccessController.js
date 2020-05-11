@@ -7,7 +7,7 @@ const DEFAULT_SECURITY_POLICY = require('./default-security-policy')
  */
 class MethodAccessController {
   /**
-   * @param {SecurityPolicy} [policy] The security policy; defaults to a policy that grants all roles permission to invoke all roles on all classes.
+   * @param {SecurityPolicy} [policy] The security policy; defaults to a policy that grants all roles permission to invoke all methods on all classes.
    */
   constructor (policy) {
     policy = policy || DEFAULT_SECURITY_POLICY
