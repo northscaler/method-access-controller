@@ -15,6 +15,14 @@ class MethodAccessController {
   }
 
   /**
+   * @deprecated
+   * @see MethodAccessController#permits
+   */
+  grants ({ role, clazz, method, data }) {
+    return this.permits({role, clazz, method, data})
+  }
+
+  /**
    * Returns `true` if the given `role` is allowed to invoke the given `method` on the given `class`, given optional contextual `data`.
    * @param {object} arg The argument being deconstructed.
    * @param {string|string[]} arg.role The role or roles attempting to invoke `method` on an instance of `class`.
@@ -23,7 +31,7 @@ class MethodAccessController {
    * @param {any} [arg.data] Optional contextual data that can be used by the underlying access control strategy.
    * @return {boolean} Whether or not the `role` is allowed to invoke `method` on `class`.
    */
-  grants ({ role, clazz, method, data }) {
+  permits ({ role, clazz, method, data }) {
     if (Array.isArray(role)) {
       return !role.map(it => this.denies({ role: it, clazz, method, data })).includes(true) &&
         role.map(it => this.grants({ role: it, clazz, method, data })).includes(true)
@@ -55,7 +63,15 @@ class MethodAccessController {
     })
   }
 
+  /**
+   * @deprecated
+   * @see MethodAccessController#_permits
+   */
   _grants ({ entries, role, clazz, method, data }) {
+    return this._interrogate({ entries, role, clazz, method, data, grant: true })
+  }
+
+  _permits ({ entries, role, clazz, method, data }) {
     return this._interrogate({ entries, role, clazz, method, data, grant: true })
   }
 

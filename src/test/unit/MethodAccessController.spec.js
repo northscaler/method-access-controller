@@ -9,11 +9,12 @@ const uuid = require('uuid/v4')
 const MethodAccessController = require('../../main/MethodAccessController')
 
 describe('unit tests of StaticRbacRepository', () => {
-  it('should grant Admin', () => {
+  it('should permit Admin', () => {
     const controller = new MethodAccessController()
     const rcm = { role: ['Admin'], clazz: 'Foo', method: 'bar' }
 
     expect(controller.denies(rcm)).to.be.false()
+    expect(controller.permits(rcm)).to.be.true()
     expect(controller.grants(rcm)).to.be.true()
   })
 
@@ -28,6 +29,7 @@ describe('unit tests of StaticRbacRepository', () => {
     const rcm = { role: [uuid()], clazz: 'Foo', method: 'bar' }
 
     expect(controller.denies(rcm)).to.be.false()
+    expect(controller.permits(rcm)).to.be.false()
     expect(controller.grants(rcm)).to.be.false()
   })
 
@@ -45,6 +47,7 @@ describe('unit tests of StaticRbacRepository', () => {
     const rcm = { role: [role], clazz, method }
 
     expect(controller.denies(rcm)).to.be.true()
+    expect(controller.permits(rcm)).to.be.false()
     expect(controller.grants(rcm)).to.be.false()
   })
 
@@ -72,6 +75,7 @@ describe('unit tests of StaticRbacRepository', () => {
     const rcm = { role: [role], clazz, method }
 
     expect(controller.denies(rcm)).to.be.true()
+    expect(controller.permits(rcm)).to.be.false()
     expect(controller.grants(rcm)).to.be.false()
   })
 
@@ -92,9 +96,11 @@ describe('unit tests of StaticRbacRepository', () => {
     const rcm = { role: [manager, owner], clazz, method }
 
     expect(controller.denies(rcm)).to.be.false()
+    expect(controller.permits(rcm)).to.be.true()
     expect(controller.grants(rcm)).to.be.true()
 
     expect(controller.denies({ role: 'TELLER', clazz, method })).to.be.false()
+    expect(controller.permits({ role: 'TELLER', clazz, method })).to.be.false()
     expect(controller.grants({ role: 'TELLER', clazz, method })).to.be.false()
   })
 
@@ -114,16 +120,20 @@ describe('unit tests of StaticRbacRepository', () => {
 
     let dayOfMonth = 1
     expect(controller.denies({ role: manager, clazz, method, data: { dayOfMonth } })).to.be.false()
+    expect(controller.permits({ role: manager, clazz, method, data: { dayOfMonth } })).to.be.false()
     expect(controller.grants({ role: manager, clazz, method, data: { dayOfMonth } })).to.be.false()
 
     expect(controller.denies({ role: 'TELLER', clazz, method, data: { dayOfMonth } })).to.be.false()
+    expect(controller.permits({ role: 'TELLER', clazz, method, data: { dayOfMonth } })).to.be.false()
     expect(controller.grants({ role: 'TELLER', clazz, method, data: { dayOfMonth } })).to.be.false()
 
     dayOfMonth = 2
     expect(controller.denies({ role: manager, clazz, method, data: { dayOfMonth } })).to.be.false()
+    expect(controller.permits({ role: manager, clazz, method, data: { dayOfMonth } })).to.be.true()
     expect(controller.grants({ role: manager, clazz, method, data: { dayOfMonth } })).to.be.true()
 
     expect(controller.denies({ role: 'TELLER', clazz, method, data: { dayOfMonth } })).to.be.false()
+    expect(controller.permits({ role: 'TELLER', clazz, method, data: { dayOfMonth } })).to.be.false()
     expect(controller.grants({ role: 'TELLER', clazz, method, data: { dayOfMonth } })).to.be.false()
   })
 
@@ -146,6 +156,7 @@ describe('unit tests of StaticRbacRepository', () => {
     const rcm = { role: ['Teller', 'Manager'], clazz: 'Foo', method: 'bar' }
 
     expect(controller.denies(rcm)).to.be.false()
+    expect(controller.permits(rcm)).to.be.true()
     expect(controller.grants(rcm)).to.be.true()
   })
 
@@ -168,6 +179,7 @@ describe('unit tests of StaticRbacRepository', () => {
     const rcm = { role: ['Teller', 'Dummy'], clazz: 'Foo', method: 'bar' }
 
     expect(controller.denies(rcm)).to.be.true()
+    expect(controller.permits(rcm)).to.be.false()
     expect(controller.grants(rcm)).to.be.false()
   })
 
