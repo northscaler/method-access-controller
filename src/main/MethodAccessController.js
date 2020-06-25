@@ -19,7 +19,7 @@ class MethodAccessController {
    * @see MethodAccessController#permits
    */
   grants ({ role, clazz, method, data }) {
-    return this.permits({role, clazz, method, data})
+    return this.permits({ role, clazz, method, data })
   }
 
   /**
