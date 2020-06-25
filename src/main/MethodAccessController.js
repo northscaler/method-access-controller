@@ -34,13 +34,13 @@ class MethodAccessController {
   permits ({ role, clazz, method, data }) {
     if (Array.isArray(role)) {
       return !role.map(it => this.denies({ role: it, clazz, method, data })).includes(true) &&
-        role.map(it => this.grants({ role: it, clazz, method, data })).includes(true)
+        role.map(it => this.permits({ role: it, clazz, method, data })).includes(true)
     }
 
     const entries = this._findEntries({ role, clazz, method })
 
     return !this._denies({ entries, role, clazz, method, data }) &&
-      this._grants({ entries, role, clazz, method, data })
+      this._permits({ entries, role, clazz, method, data })
   }
 
   /**
