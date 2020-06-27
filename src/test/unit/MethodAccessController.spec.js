@@ -160,6 +160,21 @@ describe('unit tests of StaticRbacRepository', () => {
     expect(controller.grants(rcm)).to.be.true()
   })
 
+  it('should throw when custom strategy is not a boolean, string or function', () => {
+    const policy = [
+      {
+        roles: /^Teller$/,
+        classes: /^Foo$/,
+        methods: /^snafu$/,
+        strategy: {} // not a boolean, string, or function
+      }
+    ]
+    const controller = new MethodAccessController(policy)
+    const rcm = { role: 'Teller', clazz: 'Foo', method: 'snafu' }
+
+    expect(() => controller.permits(rcm)).to.throw('E_STRATEGY_NOT_A_FUNCTION')
+  })
+
   it('should deny when a role among many is denied', () => {
     const policy = [
       {
