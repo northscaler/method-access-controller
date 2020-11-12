@@ -1,0 +1,34 @@
+'use strict';
+/**
+ * An entry in a security policy.
+ *
+ * @typedef SecurityPolicyEntry
+ * @type {Object}
+ * @property {RegExp} roles A regular expression matching the names of roles that will be invoking methods whose names match property `methods` on classes whose names match `classes`.
+ * @property {RegExp} classes A regular expression identifying names of classes whose method invocations will be controlled.
+ * @property {RegExp} methods A regular expression identifying names of methods on classes whose names match property `classes`.
+ * @property {(boolean|AccessControlStrategy|string)} strategy If `strategy` is one of the boolean literals `true` or `false`, then access is statically granted or denied, respectively.
+ * If `strategy` is an {@link AccessControlStrategy}, then it will be invoked to determine whether access is allowed.
+ * If `strategy` is a string, it is treated as a module, `require`d, and expected to export a function of type {@link AccessControlStrategy}.
+ */
+
+/**
+ * A security policy, which is simply an array of {@link SecurityPolicyEntry}s.
+ *
+ * @typedef {SecurityPolicyEntry[]} SecurityPolicy
+ */
+
+/**
+ * The default security policy, permitting all roles the ability to call all methods on all classes.
+ *
+ * @type SecurityPolicy
+ */
+
+const policy = [{
+  roles: /^.*$/,
+  classes: /^.*$/,
+  methods: /^.*$/,
+  strategy: true
+}];
+module.exports = Object.freeze(policy);
+//# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbIi4uLy4uL3NyYy9tYWluL2RlZmF1bHQtc2VjdXJpdHktcG9saWN5LmpzIl0sIm5hbWVzIjpbInBvbGljeSIsInJvbGVzIiwiY2xhc3NlcyIsIm1ldGhvZHMiLCJzdHJhdGVneSIsIm1vZHVsZSIsImV4cG9ydHMiLCJPYmplY3QiLCJmcmVlemUiXSwibWFwcGluZ3MiOiJBQUFBO0FBRUE7Ozs7Ozs7Ozs7Ozs7QUFhQTs7Ozs7O0FBTUE7Ozs7OztBQUtBLE1BQU1BLE1BQU0sR0FBRyxDQUNiO0FBQ0VDLEVBQUFBLEtBQUssRUFBRSxNQURUO0FBRUVDLEVBQUFBLE9BQU8sRUFBRSxNQUZYO0FBR0VDLEVBQUFBLE9BQU8sRUFBRSxNQUhYO0FBSUVDLEVBQUFBLFFBQVEsRUFBRTtBQUpaLENBRGEsQ0FBZjtBQVNBQyxNQUFNLENBQUNDLE9BQVAsR0FBaUJDLE1BQU0sQ0FBQ0MsTUFBUCxDQUFjUixNQUFkLENBQWpCIiwic291cmNlc0NvbnRlbnQiOlsiJ3VzZSBzdHJpY3QnXG5cbi8qKlxuICogQW4gZW50cnkgaW4gYSBzZWN1cml0eSBwb2xpY3kuXG4gKlxuICogQHR5cGVkZWYgU2VjdXJpdHlQb2xpY3lFbnRyeVxuICogQHR5cGUge09iamVjdH1cbiAqIEBwcm9wZXJ0eSB7UmVnRXhwfSByb2xlcyBBIHJlZ3VsYXIgZXhwcmVzc2lvbiBtYXRjaGluZyB0aGUgbmFtZXMgb2Ygcm9sZXMgdGhhdCB3aWxsIGJlIGludm9raW5nIG1ldGhvZHMgd2hvc2UgbmFtZXMgbWF0Y2ggcHJvcGVydHkgYG1ldGhvZHNgIG9uIGNsYXNzZXMgd2hvc2UgbmFtZXMgbWF0Y2ggYGNsYXNzZXNgLlxuICogQHByb3BlcnR5IHtSZWdFeHB9IGNsYXNzZXMgQSByZWd1bGFyIGV4cHJlc3Npb24gaWRlbnRpZnlpbmcgbmFtZXMgb2YgY2xhc3NlcyB3aG9zZSBtZXRob2QgaW52b2NhdGlvbnMgd2lsbCBiZSBjb250cm9sbGVkLlxuICogQHByb3BlcnR5IHtSZWdFeHB9IG1ldGhvZHMgQSByZWd1bGFyIGV4cHJlc3Npb24gaWRlbnRpZnlpbmcgbmFtZXMgb2YgbWV0aG9kcyBvbiBjbGFzc2VzIHdob3NlIG5hbWVzIG1hdGNoIHByb3BlcnR5IGBjbGFzc2VzYC5cbiAqIEBwcm9wZXJ0eSB7KGJvb2xlYW58QWNjZXNzQ29udHJvbFN0cmF0ZWd5fHN0cmluZyl9IHN0cmF0ZWd5IElmIGBzdHJhdGVneWAgaXMgb25lIG9mIHRoZSBib29sZWFuIGxpdGVyYWxzIGB0cnVlYCBvciBgZmFsc2VgLCB0aGVuIGFjY2VzcyBpcyBzdGF0aWNhbGx5IGdyYW50ZWQgb3IgZGVuaWVkLCByZXNwZWN0aXZlbHkuXG4gKiBJZiBgc3RyYXRlZ3lgIGlzIGFuIHtAbGluayBBY2Nlc3NDb250cm9sU3RyYXRlZ3l9LCB0aGVuIGl0IHdpbGwgYmUgaW52b2tlZCB0byBkZXRlcm1pbmUgd2hldGhlciBhY2Nlc3MgaXMgYWxsb3dlZC5cbiAqIElmIGBzdHJhdGVneWAgaXMgYSBzdHJpbmcsIGl0IGlzIHRyZWF0ZWQgYXMgYSBtb2R1bGUsIGByZXF1aXJlYGQsIGFuZCBleHBlY3RlZCB0byBleHBvcnQgYSBmdW5jdGlvbiBvZiB0eXBlIHtAbGluayBBY2Nlc3NDb250cm9sU3RyYXRlZ3l9LlxuICovXG5cbi8qKlxuICogQSBzZWN1cml0eSBwb2xpY3ksIHdoaWNoIGlzIHNpbXBseSBhbiBhcnJheSBvZiB7QGxpbmsgU2VjdXJpdHlQb2xpY3lFbnRyeX1zLlxuICpcbiAqIEB0eXBlZGVmIHtTZWN1cml0eVBvbGljeUVudHJ5W119IFNlY3VyaXR5UG9saWN5XG4gKi9cblxuLyoqXG4gKiBUaGUgZGVmYXVsdCBzZWN1cml0eSBwb2xpY3ksIHBlcm1pdHRpbmcgYWxsIHJvbGVzIHRoZSBhYmlsaXR5IHRvIGNhbGwgYWxsIG1ldGhvZHMgb24gYWxsIGNsYXNzZXMuXG4gKlxuICogQHR5cGUgU2VjdXJpdHlQb2xpY3lcbiAqL1xuY29uc3QgcG9saWN5ID0gW1xuICB7XG4gICAgcm9sZXM6IC9eLiokLyxcbiAgICBjbGFzc2VzOiAvXi4qJC8sXG4gICAgbWV0aG9kczogL14uKiQvLFxuICAgIHN0cmF0ZWd5OiB0cnVlXG4gIH1cbl1cblxubW9kdWxlLmV4cG9ydHMgPSBPYmplY3QuZnJlZXplKHBvbGljeSlcbiJdfQ==
